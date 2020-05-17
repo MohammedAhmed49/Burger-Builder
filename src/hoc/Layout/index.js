@@ -3,6 +3,9 @@ import Auxiliary from '../Auxiliary';
 import Toolbar from '../../components/Navigation/Toolbar';
 import classes from './layout.module.css';
 import SideDrawer from '../../components/Navigation/SideDrawer'
+import { Switch, Route, Redirect } from 'react-router';
+import BurgerBuilder from '../../containers/BurgerBuilder';
+import Checkout from '../../containers/Checkout';
 
 class Layout extends Component {
     state = {
@@ -23,7 +26,13 @@ class Layout extends Component {
                 show={this.state.showSideDrawer}/>
 
                 <main className={classes.content}>
-                    {this.props.children}
+                    {/* {this.props.children} */}
+
+                    <Switch>
+                        <Route path="/burger-builder" component={BurgerBuilder} />
+                        <Route path="/checkout" component={Checkout} />
+                        <Redirect from="/" to="/burger-builder" />
+                    </Switch>
                 </main>
             </Auxiliary>
         )

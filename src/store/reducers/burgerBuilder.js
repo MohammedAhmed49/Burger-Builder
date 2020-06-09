@@ -38,7 +38,9 @@ const reducer = (state = initialState, action) => {
         case actionTypes.INIT_INGREDIENTS:
             return {
                 ...state,
-                ingredients: action.ingredients
+                ingredients: action.ingredients,
+                totalPrice: 3,
+                error: false
             }
         case actionTypes.SET_ERROR:
             return {

@@ -1,6 +1,12 @@
 import * as actionTypes from './actionTypes';
 import Axios from '../../axios-orders';
 
+export const purchaseInit = () => {
+    return {
+        type: actionTypes.PURCHASE_INIT
+    }
+}
+
 const purchaseSuccess = (orderId, orderData) => {
     return {
         type: actionTypes.PURCHASE_SUCCESS,
@@ -35,8 +41,37 @@ export const purchase = (orderData) => {
     }
 }
 
-export const purchaseInit = () => {
-    return {
-        type: actionTypes.PURCHASE_INIT
+const ordersSuccess = (orders) => {
+    return { 
+        type: actionTypes.ORDERS_SUCCESS,
+        orders: orders
     }
 }
+
+const orderFailed = (error) => {
+    return { 
+        type: actionTypes.ORDERS_FAILED,
+        error: error
+    }
+}
+
+const ordersStart = () => {
+    return {
+        type: actionTypes.ORDERS_START
+    }
+}
+
+export const fetchOrders = () => {
+    return dispatch => {
+        dispatch(ordersStart());
+        Axios.get('/orders.json')
+        .then(res=> {
+            dispatch(ordersSuccess(res.data));
+        })
+        .catch(error => {
+            dispatch(orderFailed(error));
+        });
+    }
+}
+
+

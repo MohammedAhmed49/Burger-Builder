@@ -3,7 +3,8 @@ import * as actionTypes from '../actions/actionTypes';
 const initState = {
     orders: [],
     loading: false,
-    purchased: false
+    purchased: false,
+    error: null
 }
 
 export const orderReducer = (state = initState, action) => {
@@ -33,6 +34,26 @@ export const orderReducer = (state = initState, action) => {
              }
         
         case actionTypes.PURCHASE_START:
+            return { 
+                ...state,
+                loading: true
+            }
+
+        case actionTypes.ORDERS_SUCCESS:
+            return{
+                ...state,
+                orders: action.orders,
+                loading: false
+            }
+
+        case actionTypes.ORDERS_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                error: action.error
+            }
+
+        case actionTypes.ORDERS_START:
             return { 
                 ...state,
                 loading: true

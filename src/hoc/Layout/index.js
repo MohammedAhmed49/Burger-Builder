@@ -7,6 +7,7 @@ import { Switch, Route, Redirect } from 'react-router';
 import BurgerBuilder from '../../containers/BurgerBuilder';
 import Checkout from '../../containers/Checkout';
 import Orders from '../../containers/Orders';
+import Auth from '../../containers/Auth';
 
 class Layout extends Component {
     state = {
@@ -33,6 +34,7 @@ class Layout extends Component {
                         <Route path="/burger-builder" component={BurgerBuilder} />
                         <Route path="/checkout" component={Checkout} />
                         <Route path="/orders" component={Orders} />
+                        <Route path="/auth" component={Auth} />
                         <Redirect from="/" to="/burger-builder" />
                     </Switch>
                 </main>

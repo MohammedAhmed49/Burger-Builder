@@ -12,3 +12,8 @@ export const ORDERS_SUCCESS = 'ORDERS_SUCCESS';
 export const ORDERS_FAILED = 'ORDERS_FAILED';
 export const ORDERS_START = 'ORDERS_START';
 export const FETCH_ORDERS = 'FETCH_ORDERS';
+
+export const AUTH_SUCCESS = 'AUTH_SUCCESS';
+export const AUTH_FAILED = 'AUTH_FAILED';
+export const AUTH_START = 'AUTH_START';
+export const AUTH_INIT = 'AUTH_INIT';

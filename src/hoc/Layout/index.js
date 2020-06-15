@@ -8,6 +8,8 @@ import BurgerBuilder from '../../containers/BurgerBuilder';
 import Checkout from '../../containers/Checkout';
 import Orders from '../../containers/Orders';
 import Auth from '../../containers/Auth';
+import { connect } from 'react-redux';
+import Logout from '../../containers/Auth/Logout';
 
 class Layout extends Component {
     state = {
@@ -21,9 +23,10 @@ class Layout extends Component {
     render(){
         return (
             <Auxiliary>
-                <Toolbar toggleSideDrawer={this.toggleSideDrawer}/>
+                <Toolbar isAuth={this.props.isAuth} toggleSideDrawer={this.toggleSideDrawer}/>
                 
                 <SideDrawer 
+                isAuth={this.props.isAuth}
                 toggleSideDrawer={this.toggleSideDrawer}
                 show={this.state.showSideDrawer}/>
 
@@ -35,6 +38,7 @@ class Layout extends Component {
                         <Route path="/checkout" component={Checkout} />
                         <Route path="/orders" component={Orders} />
                         <Route path="/auth" component={Auth} />
+                        <Route path="/logout" component={Logout} />
                         <Redirect from="/" to="/burger-builder" />
                     </Switch>
                 </main>
@@ -43,4 +47,10 @@ class Layout extends Component {
     }
 }
 
-export default Layout;
+const mapStateToProps = state=> {
+    return{
+        isAuth: state.auth.idToken !== null
+    }
+}
+
+export default connect(mapStateToProps)(Layout);

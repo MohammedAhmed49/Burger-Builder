@@ -7,10 +7,11 @@ const authStart = () => {
     }
 }
 
-const authSuccess = (authData) => {
+const authSuccess = (idToken, userId) => {
     return { 
         type: actionTypes.AUTH_SUCCESS,
-        authData: authData
+        idToken: idToken,
+        userId: userId
      }
 }
 
@@ -19,6 +20,20 @@ const authFailed = (error) => {
         type: actionTypes.AUTH_FAILED,
         error: error
      }
+}
+
+export const logOut = () => {
+    return {
+        type: actionTypes.AUTH_LOGOUT
+    }
+}
+
+const checkLogout = (expiresIn) => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logOut());
+        }, expiresIn * 1000);
+    }
 }
 
 export const authInit = (email, password, isSignup) => {
@@ -34,11 +49,12 @@ export const authInit = (email, password, isSignup) => {
         Axios.post(url, data)
         .then(res => {
             console.log(res.data);
-            dispatch(authSuccess(res.data));
+            dispatch(authSuccess(res.data.idToken, res.data.localId));
+            dispatch(checkLogout(res.data.expiresIn));
         })
         .catch(error => {
             console.log(error);
-            dispatch(authFailed(error));
+            dispatch(authFailed(error.response.data.error.message));
         });
     }
 }

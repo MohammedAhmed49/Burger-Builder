@@ -4,6 +4,8 @@ import Input from '../../components/UI/Input';
 import classes from './auth.module.css';
 import {authInit} from '../../store/actions/index';
 import { connect } from 'react-redux';
+import Spinner from '../../components/UI/Spinner';
+import { Redirect } from 'react-router';
 
 class Auth extends Component {
     state={
@@ -73,7 +75,6 @@ class Auth extends Component {
     }
 
     switchMode = (e) => {
-        console.log('momo');
         this.setState(prevState => {
             return{
                 isSignup: !prevState.isSignup
@@ -97,6 +98,7 @@ class Auth extends Component {
                 confiq: {...this.state.controls[input]}
             });
         }
+        let error = null;
         let form = <form onSubmit={this.submitHandler}>
                         {formInputs.map(input => 
                             <Input 
@@ -108,12 +110,32 @@ class Auth extends Component {
                         )}
                         <Button btnType="Success">Submit</Button>
                     </form>
+        let redirect = null;
+        if(this.props.loading){
+            form = <Spinner />
+        }
+        if(this.props.error){
+            error = <p>{this.props.error}</p>
+        }
+        if(this.props.idToken !== null){
+            redirect = <Redirect to="/" />
+        }
         return(
             <div className={classes.Auth}>
+                {redirect}
+                {error}
                 {form}
                 <Button btnType="Danger" clicked={this.switchMode}>Swich to {this.state.isSignup ? 'sign in' : 'sign up'}</Button>
             </div>
         )
+    }
+}
+
+const mapStateToProps = (state) => {
+    return{
+        loading: state.auth.loading,
+        error: state.auth.error,
+        idToken: state.auth.idToken
     }
 }
 
@@ -123,4 +145,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

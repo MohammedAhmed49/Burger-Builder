@@ -1,18 +1,31 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Layout from './hoc/Layout';
 import BurgerBuilder from './containers/BurgerBuilder';
 import { BrowserRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { checkAuthLocal } from './store/actions/index';
 
-function App() {
-  return (
-    <BrowserRouter>
-      <div>
-        <Layout>
-          <BurgerBuilder />
-        </Layout>
-      </div>
-    </BrowserRouter>
-  );
+class App extends Component {
+  componentDidMount() {
+    this.props.checkAuthLocal()
+  }
+  render() {
+    return (
+      <BrowserRouter>
+        <div>
+          <Layout>
+            <BurgerBuilder />
+          </Layout>
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    checkAuthLocal: () => dispatch(checkAuthLocal())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App);

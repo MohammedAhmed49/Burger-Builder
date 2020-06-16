@@ -34,6 +34,8 @@ class BurgerBuilder extends Component {
     purchasingHandler = () => {
         if(this.props.isAuth){
             this.setState({purchasing: true});
+        } else {
+            this.props.history.push('/auth')
         }
         
     }
@@ -104,7 +106,8 @@ const mapStateToProps = (state) => {
         ingredients: state.burger.ingredients,
         totalPrice: state.burger.totalPrice,
         error: state.burger.error,
-        isAuth: state.auth.idToken !== null
+        isAuth: state.auth.idToken !== null,
+        started: state.burger.started
     }
 }
 

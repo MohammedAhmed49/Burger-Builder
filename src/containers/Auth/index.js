@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Button from '../../components/UI/Button';
 import Input from '../../components/UI/Input';
 import classes from './auth.module.css';
-import {authInit} from '../../store/actions/index';
+import { authInit, setAuthRedirect } from '../../store/actions/index';
 import { connect } from 'react-redux';
 import Spinner from '../../components/UI/Spinner';
 import { Redirect } from 'react-router';
@@ -39,6 +39,15 @@ class Auth extends Component {
             },
         },
         isSignup: true
+    }
+
+    componentDidMount() {
+        if(this.props.started){
+            this.props.setAuthRedirect('/checkout')
+        }
+        if(!this.props.started && this.props.authRedirect !== '/checkout'){
+            this.props.setAuthRedirect('/');
+        }
     }
 
     checkValidity = (value, rules) => {
@@ -118,7 +127,7 @@ class Auth extends Component {
             error = <p>{this.props.error}</p>
         }
         if(this.props.idToken !== null){
-            redirect = <Redirect to="/" />
+            redirect = <Redirect to={this.props.authRedirect} />
         }
         return(
             <div className={classes.Auth}>
@@ -135,13 +144,16 @@ const mapStateToProps = (state) => {
     return{
         loading: state.auth.loading,
         error: state.auth.error,
-        idToken: state.auth.idToken
+        idToken: state.auth.idToken,
+        started: state.burger.started,
+        authRedirect: state.auth.authRedirect
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return{
-        authInit: (email, password, isSignup) => dispatch(authInit(email, password, isSignup))
+        authInit: (email, password, isSignup) => dispatch(authInit(email, password, isSignup)),
+        setAuthRedirect: (path) => dispatch(setAuthRedirect(path))
     }
 }
 

@@ -64,7 +64,7 @@ const ordersStart = () => {
 export const fetchOrders = () => {
     return (dispatch, getState) => {
         dispatch(ordersStart());
-        Axios.get('/orders.json?auth=' + getState().auth.idToken)
+        Axios.get(`/orders.json?auth=${getState().auth.idToken}&orderBy="userId"&equalTo="${getState().auth.userId}"`)
         .then(res=> {
             dispatch(ordersSuccess(res.data));
         })

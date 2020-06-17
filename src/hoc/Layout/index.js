@@ -21,6 +21,23 @@ class Layout extends Component {
         });
     }
     render(){
+        let routes = (
+            <Switch>
+                <Route path="/auth" component={Auth} />
+                <Route path="/burger-builder" component={BurgerBuilder} />
+                <Redirect to="/burger-builder" />
+            </Switch>
+        );
+        if(this.props.isAuth){
+            routes = <Switch>
+                <Route path="/burger-builder" component={BurgerBuilder} />
+                <Route path="/checkout" component={Checkout} />
+                <Route path="/orders" component={Orders} />
+                <Route path="/auth" component={Auth} />
+                <Route path="/logout" component={Logout} />
+                <Redirect from="/" to="/burger-builder" />
+            </Switch>
+        }
         return (
             <Auxiliary>
                 <Toolbar isAuth={this.props.isAuth} toggleSideDrawer={this.toggleSideDrawer}/>
@@ -33,14 +50,7 @@ class Layout extends Component {
                 <main className={classes.content}>
                     {/* {this.props.children} */}
 
-                    <Switch>
-                        <Route path="/burger-builder" component={BurgerBuilder} />
-                        <Route path="/checkout" component={Checkout} />
-                        <Route path="/orders" component={Orders} />
-                        <Route path="/auth" component={Auth} />
-                        <Route path="/logout" component={Logout} />
-                        <Redirect from="/" to="/burger-builder" />
-                    </Switch>
+                    {routes}
                 </main>
             </Auxiliary>
         )

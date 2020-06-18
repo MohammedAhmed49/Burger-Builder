@@ -6,7 +6,6 @@ const Order = (props) => {
     for(let ingredientName in props.order.ingredients){
         ingredients.push({name: ingredientName, amount: props.order.ingredients[ingredientName]});
     }
-    console.log(ingredients);
     const ingredientsOutput = ingredients.map(ingredient => {
         return(
             <span style={{

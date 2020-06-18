@@ -7,8 +7,6 @@ import OrderSummary from '../../components/Burger/OrderSummary';
 import Axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler';
-import Checkout from '../Checkout';
-import * as actionTypes from '../../store/actions/actionTypes';
 import {addIngredient, removeIngredient, initIngredients, purchaseInit} from '../../store/actions/index';
 import { connect } from 'react-redux';
 

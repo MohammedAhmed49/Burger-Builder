@@ -3,7 +3,7 @@ import Button from '../../../components/UI/Button';
 import classes from './ContactData.module.css';
 import Axios from '../../../axios-orders';
 import Spinner from "../../../components/UI/Spinner";
-import { withRouter } from "react-router";
+import { withRouter, Redirect } from "react-router";
 import Input from '../../../components/UI/Input';
 import { connect } from "react-redux";
 import withErrorHandler from '../../../hoc/withErrorHandler';
@@ -173,6 +173,10 @@ class ContactData extends Component{
         if(this.props.loading){
             form = <Spinner />
         }
+        let redirect = null;
+        if(this.props.purchased){
+            redirect = <Redirect to="/" />
+        }
         return(
             <div className={classes.ContactData}>
                 <h4>Enter your Contact Data</h4>
@@ -187,7 +191,9 @@ const mapStateToProps = (state) => {
         ingredients: state.burger.ingredients,
         totalPrice: state.burger.totalPrice,
         loading: state.orders.loading,
-        userId: state.auth.userId
+        purchased: state.orders.purchased,
+        userId: state.auth.userId,
+        
     }
 }
 

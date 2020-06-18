@@ -12,7 +12,6 @@ class Orders extends Component{
     }
     render(){
         let orders = <Spinner />;
-        console.log(this.props.orders);
         if(!this.props.loading){
             orders = Object.keys(this.props.orders).map((orderKey) => {
                 return(
@@ -20,7 +19,6 @@ class Orders extends Component{
                 )
             });
         }
-        console.log(orders);
 
         return(
             <div>

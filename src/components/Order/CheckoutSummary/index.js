@@ -1,5 +1,4 @@
 import React from 'react';
-import classes from './CheckoutSummary.module.css';
 import Burger from '../../Burger';
 import Button from '../../UI/Button';
 

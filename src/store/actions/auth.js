@@ -33,7 +33,6 @@ export const logOut = () => {
 
 const checkLogout = (expiresIn) => {
     return dispatch => {
-        console.log(expiresIn * 1000);
         setTimeout(() => {
             dispatch(logOut());
         }, expiresIn * 1000);
@@ -49,7 +48,6 @@ export const authInit = (email, password, isSignup) => {
             returnSecureToken: true
         }
         const url = isSignup ? 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCd70anRS0wxNYWhektqLtHzTAe406lGiw' : 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCd70anRS0wxNYWhektqLtHzTAe406lGiw';
-        console.log(isSignup, url);
         Axios.post(url, data)
         .then(res => {
             localStorage.setItem('token', res.data.idToken);

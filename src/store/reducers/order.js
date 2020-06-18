@@ -46,7 +46,7 @@ export const orderReducer = (state = initState, action) => {
                 loading: false
             }
 
-        case actionTypes.ORDERS_SUCCESS:
+        case actionTypes.ORDERS_FAILED:
             return{
                 ...state,
                 loading: false,

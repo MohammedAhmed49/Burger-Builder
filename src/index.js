@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 import { orderReducer } from './store/reducers/order';
 import auth from './store/reducers/auth';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose; // to make sure it doesn't work on production
 
 const rootReducer = combineReducers({
   burger: burgerBuilderReducer,
